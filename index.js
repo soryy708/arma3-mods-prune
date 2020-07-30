@@ -135,5 +135,6 @@ function pause() {
     })
     .catch(err => {
         console.log(chalk.red('Unexpected error occurred:'));
-        console.log(chalk.red(err));
+        console.log(chalk.red(err.toString()));
+        console.log(chalk.red(err.stack));
     });
