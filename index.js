@@ -44,7 +44,7 @@ function pause() {
             const xmlContent = await xml2js.parseStringPromise(presetFileContent);
             return {
                 name: fileName.slice(0, -1 * (fileName.endsWith('.preset2') ? '.preset2' : 'preset2').length),
-                modIds: xmlContent['addons-presets']['published-ids'][0].id,
+                modIds: xmlContent['addons-presets']['published-ids'][0] !== '' ? xmlContent['addons-presets']['published-ids'][0].id : [],
                 lastUpdate: new Date(xmlContent['addons-presets']['last-update'][0]),
             };
         }));
