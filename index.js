@@ -19,7 +19,8 @@ function pause() {
 (async()=>{
     const arma3LauncherFilesDirPath = path.join(os.homedir(), 'AppData', 'Local', 'Arma 3 Launcher');
     if (!await util.promisify(fs.exists)(arma3LauncherFilesDirPath)) {
-        throw new Error('Unable to find Arma 3 launcher files directory');
+        console.log(chalk.red('Unable to find Arma 3 launcher files directory'));
+        return;
     }
 
     const getModData = async () => {
