@@ -7,6 +7,15 @@ const prettyBytes = require('pretty-bytes');
 const moment = require('moment');
 const chalk = require('chalk');
 
+function pause() {
+    return new Promise(resolve => {
+        console.log('Press Enter to continue . . .');
+        process.stdin.once('data', function () {
+            resolve();
+        });
+    })
+}
+
 (async()=>{
     const arma3LauncherFilesDirPath = path.join(os.homedir(), 'AppData', 'Local', 'Arma 3 Launcher');
     if (!await util.promisify(fs.exists)(arma3LauncherFilesDirPath)) {
@@ -119,6 +128,10 @@ const chalk = require('chalk');
             });
     }
 })()
+    .then(pause)
+    .then(() => {
+        process.exit();
+    })
     .catch(err => {
         console.log(chalk.red('Unexpected error occurred:'));
         console.log(chalk.red(err));
