@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "start": "node ."
+        "start": "node .",
+        "package": "pkg package.json --target host --output dist/arma3modprune.exe --options --max-stack-size=2048"
     },
     "dependencies": {
         "chalk": "^4.1.0",
@@ -8,5 +9,11 @@
         "pretty-bytes": "^5.3.0",
         "xml2js": "^0.4.23"
     },
-    "license": "MIT"
+    "devDependencies": {
+        "pkg": "^4.4.9"
+    },
+    "name": "arma3modprune",
+    "license": "MIT",
+    "bin": "index.js",
+    "pkg": {}
 }
