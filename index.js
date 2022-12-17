@@ -16,7 +16,7 @@ function pause() {
     })
 }
 
-(async()=>{
+(async () => {
     const arma3LauncherFilesDirPath = path.join(os.homedir(), 'AppData', 'Local', 'Arma 3 Launcher');
     if (!await util.promisify(fs.exists)(arma3LauncherFilesDirPath)) {
         console.log(chalk.red('Unable to find Arma 3 launcher files directory'));
@@ -82,7 +82,7 @@ function pause() {
     } else {
         const usedModIds = getUsedModIds(presets);
         const unusedModIds = getUnusedModIds(modData, usedModIds);
-        
+
         if (unusedModIds.length > 0) {
             let totalWeight = 0;
             console.log(chalk.underline('Found subscribed mods not used in any preset:'));
@@ -104,29 +104,31 @@ function pause() {
                 });
             console.log(chalk.bold(`Total reclaimable space: ${prettyBytes(totalWeight)}`));
         }
-    
+
         console.log('');
 
-        console.log(chalk.underline('Presets by age:'));
-        presets
-            .filter(preset => preset.name !== 'arma3.default')
-            .sort((a, b) => a.lastUpdate - b.lastUpdate)
-            .forEach(preset => {
-                const age = moment().diff(preset.lastUpdate, 'days');
-                const getColor = () => {
-                    if (age < 7) {
-                        return chalk.white;
-                    }
-                    if (age < 14) {
-                        return chalk.green;
-                    }
-                    if (age < 60) {
-                        return chalk.yellow;
-                    }
-                    return chalk.red;
-                };
-                console.log(`${preset.name} (${preset.modIds.length} mods) - last updated ${getColor()(moment(preset.lastUpdate).fromNow())}`);
-            });
+        const nonDefaultPresets = presets.filter(preset => preset.name !== 'arma3.default');
+        if (nonDefaultPresets.length !== 0) {
+            console.log(chalk.underline('Presets by age:'));
+            nonDefaultPresets
+                .sort((a, b) => a.lastUpdate - b.lastUpdate)
+                .forEach(preset => {
+                    const age = moment().diff(preset.lastUpdate, 'days');
+                    const getColor = () => {
+                        if (age < 7) {
+                            return chalk.white;
+                        }
+                        if (age < 14) {
+                            return chalk.green;
+                        }
+                        if (age < 60) {
+                            return chalk.yellow;
+                        }
+                        return chalk.red;
+                    };
+                    console.log(`${preset.name} (${preset.modIds.length} mods) - last updated ${getColor()(moment(preset.lastUpdate).fromNow())}`);
+                });
+        }
     }
 })()
     .then(pause)
