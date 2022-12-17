@@ -127,7 +127,8 @@ function pause() {
                         return chalk.red;
                     };
 
-                    console.log(`${preset.name} (${preset.modIds.length} mods) - last updated ${getColor()(dates.intlFormatDistance(preset.lastUpdate, new Date()))}`);
+                    const modsNoun = preset.modIds.length === 1 ? 'mod' : 'mods';
+                    console.log(`${preset.name} (${preset.modIds.length} ${modsNoun}) - last updated ${getColor()(dates.intlFormatDistance(preset.lastUpdate, new Date()))}`);
                 });
         }
     }
